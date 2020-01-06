@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { xSize, ySize } from '../../consts/config';
+import { Board } from '../../interfaces/board';
 
 @Component({
   selector: 'app-board',
@@ -8,7 +9,7 @@ import { xSize, ySize } from '../../consts/config';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardComponent {
-  @Input() gameStatus: string[][];
+  @Input() gameStatus: Board;
 
   public getCell(x: number, y: number): string {
     return this.gameStatus[x][y];
