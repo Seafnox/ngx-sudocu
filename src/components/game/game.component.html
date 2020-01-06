@@ -1,0 +1,3 @@
+<ng-container *ngIf="gameState$ | async as gameState">
+  <app-board [gameStatus]="gameState"></app-board>
+</ng-container>

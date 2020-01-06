@@ -1,0 +1,7 @@
+<ng-container *ngFor="let y of getRows()">
+  <div class="row">
+    <ng-container *ngFor="let x of getCells()">
+      <app-cell [value]="getCell(x, y)"></app-cell>
+    </ng-container>
+  </div>
+</ng-container>
