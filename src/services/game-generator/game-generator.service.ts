@@ -42,7 +42,7 @@ export class GameGeneratorService {
   }
 
   private randomizeBoard(board: Board): Board {
-    const operationCount = this.nextRandom() % 49;
+    const operationCount = this.nextRandom() % 49 + 1;
     let tempBoard = board;
 
     for (let i = 0; i < operationCount; i++) {
@@ -57,16 +57,20 @@ export class GameGeneratorService {
     const limitPart = this.limit / actionCount;
     const random = this.nextRandom();
     switch (true) {
-      case random < limitPart: return this.splitRows(board);
-      case random < limitPart * 2: return this.splitCols(board);
-      case random < limitPart * 3: return this.splitChunkRows(board);
-      case random < limitPart * 4: return this.splitChunkCols(board);
-      default: return this.transit(board);
+      case random < limitPart: return this.initSplitRows(board);
+      case random < limitPart * 2: return this.initSplitCols(board);
+      case random < limitPart * 3: return this.initSplitRowAreas(board);
+      case random < limitPart * 4: return this.initSplitColAreas(board);
+      default: return this.initTransit(board);
     }
   }
 
-  private transit(board: Board): Board {
+  private initTransit(board: Board): Board {
     this.lastOperations.push(OperationNames.TRANSIT);
+    return this.transit(board);
+  }
+
+  private transit(board: Board): Board {
     const newBoard: Board = [];
 
     board.forEach((row, y) => {
@@ -82,14 +86,18 @@ export class GameGeneratorService {
     return newBoard;
   }
 
-  private splitRows(board: Board): Board {
+  private initSplitRows(board: Board): Board {
     this.lastOperations.push(OperationNames.SPLIT_ROWS);
+    return this.splitRows(board);
+  }
+
+  private splitRows(board: Board): Board {
     const takenAreaRow = this.nextRandomRange(yAreaCount);
     const taken1stRowInArea = this.nextRandomRange(yAreaSize);
     const taken2ndRowInArea = this.nextRandomRange(yAreaSize);
 
     if (taken1stRowInArea === taken2ndRowInArea) {
-      return board;
+      return this.splitRows(board);
     }
 
     const taken1stRow = takenAreaRow * yAreaSize + taken1stRowInArea;
@@ -103,14 +111,18 @@ export class GameGeneratorService {
     return board;
   }
 
-  private splitCols(board: Board): Board {
+  private initSplitCols(board: Board): Board {
     this.lastOperations.push(OperationNames.SPLIT_COLS);
+    return this.splitCols(board);
+  }
+
+  private splitCols(board: Board): Board {
     const takenAreaCol = this.nextRandomRange(xAreaCount);
     const taken1stColInArea = this.nextRandomRange(xAreaSize);
     const taken2ndColInArea = this.nextRandomRange(xAreaSize);
 
     if (taken1stColInArea === taken2ndColInArea) {
-      return board;
+      return this.splitCols(board);
     }
 
     const taken1stCol = takenAreaCol * xAreaSize + taken1stColInArea;
@@ -126,13 +138,17 @@ export class GameGeneratorService {
     return board;
   }
 
-  private splitChunkRows(board: Board): Board {
+  private initSplitRowAreas(board: Board): Board {
     this.lastOperations.push(OperationNames.SPLIT_ROW_AREAS);
+    return this.splitRowAreas(board);
+  }
+
+  private splitRowAreas(board: Board): Board {
     const taken1stAreaRow = this.nextRandomRange(yAreaCount);
     const taken2ndAreaRow = this.nextRandomRange(yAreaCount);
 
     if (taken1stAreaRow === taken2ndAreaRow) {
-      return board;
+      return this.splitRowAreas(board);
     }
 
     for (let i = 0; i < yAreaSize; i++) {
@@ -148,13 +164,17 @@ export class GameGeneratorService {
     return board;
   }
 
-  private splitChunkCols(board: Board): Board {
+  private initSplitColAreas(board: Board): Board {
     this.lastOperations.push(OperationNames.SPLIT_COL_AREAS);
+    return this.splitColAreas(board);
+  }
+
+  private splitColAreas(board: Board): Board {
     const taken1stAreaCol = this.nextRandomRange(xAreaCount);
     const taken2ndAreaCol = this.nextRandomRange(xAreaCount);
 
     if (taken1stAreaCol === taken2ndAreaCol) {
-      return board;
+      return this.splitColAreas(board);
     }
 
     board.forEach(row => {

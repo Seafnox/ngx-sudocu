@@ -18,9 +18,13 @@ export class GameComponent {
     private gameGeneratorService: GameGeneratorService,
     private gameStateService: GameStateService,
   ) {
+    this.regenerateBoard();
+    this.gameState$ = this.gameStateService.getState$();
+  }
+
+  public regenerateBoard(): void {
     this.seed = this.gameGeneratorService.generateSeed();
     this.gameStateService.setState(this.gameGeneratorService.generateBoard(this.seed));
-    this.gameState$ = this.gameStateService.getState$();
   }
 
   public getLastOperations(): string[] {
