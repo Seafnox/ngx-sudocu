@@ -30,7 +30,7 @@ export class GameComponent {
 
   public regenerateBoard(): void {
     this.seed = this.gameGeneratorService.generateSeed();
-    this.gameStateService.setState(this.gameGeneratorService.generateBoard(this.seed));
+    this.gameStateService.setState(this.gameGeneratorService.generateGame(this.seed, 3));
   }
 
   public getLastOperations(): string[] {

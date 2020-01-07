@@ -17,6 +17,15 @@ export class GameGeneratorService {
     return Math.floor(Math.random() * this.limit);
   }
 
+  public generateGame(seed: number, simplicity: number): Board {
+    const board = this.generateBoard(seed);
+
+    this.prepareEachRow(board, simplicity);
+    this.prepareEachCol(board, simplicity);
+
+    return board;
+  }
+
   public generateBoard(seed: number): Board {
     this.seed = typeof seed === 'number' ? seed : this.seed;
 
@@ -24,6 +33,24 @@ export class GameGeneratorService {
     this.lastOperations = [];
 
     return this.randomizeBoard(nativeBoard);
+  }
+
+  private prepareEachRow(board: Board, simplicity: number): void {
+    board.forEach(row => {
+      const alreadyFilled = row.map((cell, index) => cell.isPermanent ? index : -1).filter(i => i !== -1);
+
+      if (alreadyFilled.length < simplicity) {
+        const notFilled = row.map((cell, index) => !cell.isPermanent ? index : -1).filter(i => i !== -1);
+        const affectedPositions = this.randomFromList(simplicity - alreadyFilled.length, notFilled);
+
+        affectedPositions.forEach(index => row[index].isPermanent = true);
+      }
+    });
+  }
+
+  private prepareEachCol(board: Board, simplicity: number): void {
+    const transitedBoard = this.transit(board);
+    this.prepareEachRow(transitedBoard, simplicity);
   }
 
   private generateRow(x: number): Cell[] {
@@ -36,6 +63,7 @@ export class GameGeneratorService {
       isPermanent: false,
     };
   }
+
   private generateCellValue(x: number, y: number): number {
     if (y < yAreaSize) {
       return (x + y * xAreaCount) % xSize + 1;
@@ -87,6 +115,22 @@ export class GameGeneratorService {
         }
 
         newBoard[x][y] = cell;
+      });
+    });
+
+    return newBoard;
+  }
+
+  private reverseTransit(board: Board): Board {
+    const newBoard: Board = [];
+
+    board.forEach((row, y) => {
+      row.forEach((cell, x) => {
+        if (!Array.isArray(newBoard[x])) {
+          newBoard[x] = [];
+        }
+
+        newBoard[row.length - x][board.length - y] = cell;
       });
     });
 
@@ -197,6 +241,17 @@ export class GameGeneratorService {
     });
 
     return board;
+  }
+
+  private randomFromList(count: number, list: number[]): number[] {
+    const copy = list.slice();
+    const countToRemove = copy.length - count;
+    for (let i = 0; i < countToRemove; i++) {
+      const indexToRemove = this.nextRandomRange(copy.length);
+      copy.splice(indexToRemove, 1);
+    }
+
+    return copy;
   }
 
   private nextRandomRange(to: number, from: number = 0): number {

@@ -4,11 +4,18 @@
   width: 40px;
   height: 40px;
   line-height: 40px;
+  font-size: 20px;
   text-align: center;
   border-collapse: collapse;
+  color: #112233;
 }
 
 :host-context(.active_cell) {
   border-color: brown;
   background: aquamarine;
+}
+
+.permanent {
+  font-weight: 900;
+  color: #000000;
 }
