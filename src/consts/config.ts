@@ -1,6 +1,3 @@
-export const xSize = 9;
-export const ySize = 9;
-export const xAreaCount = 3;
-export const yAreaCount = 3;
-export const xAreaSize = xSize / xAreaCount;
-export const yAreaSize = ySize / yAreaCount;
+export const boardSize = 9;
+export const areaCount = 3;
+export const areaSize = boardSize / areaCount;

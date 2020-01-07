@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { xSize, ySize } from '../../consts/config';
+import { boardSize } from '../../consts/config';
 import { Board } from '../../interfaces/board';
 import { Cell } from '../../interfaces/cell';
 import { CellPosition } from '../../interfaces/cell.position';
@@ -22,11 +22,11 @@ export class BoardComponent {
   }
 
   public getCells(): number[] {
-    return new Array(xSize).fill(0).map((a, index) => index);
+    return new Array(boardSize).fill(0).map((a, index) => index);
   }
 
   public getRows(): number[] {
-    return new Array(ySize).fill(0).map((a, index) => index);
+    return new Array(boardSize).fill(0).map((a, index) => index);
   }
 
   public selectCell(x: number, y: number): void {

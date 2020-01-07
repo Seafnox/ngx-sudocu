@@ -4,6 +4,7 @@ import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { map, switchMap } from 'rxjs/operators';
+import { boardSize } from '../../consts/config';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,13 @@ export class GameStateService {
 
   public getSelectedCellPosition$(): Observable<CellPosition> {
     return this.selectedCellPosition$.asObservable();
+  }
+
+  public changeSelectedCellValue(value: number) {
+    const position = this.selectedCellPosition$.value;
+    const newState = this.state$.value.map((row, y) =>
+      y !== position.y ? row : row.map((cell, x) =>
+        x !== position.x ? cell : {...cell, userValue: value}));
+    this.state$.next(newState);
   }
 }

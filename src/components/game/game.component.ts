@@ -40,4 +40,8 @@ export class GameComponent {
   public selectCell(position: CellPosition): void {
     this.gameStateService.setSelectedCellPosition(position);
   }
+
+  setCellValue(value: number) {
+    this.gameStateService.changeSelectedCellValue(value);
+  }
 }

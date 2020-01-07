@@ -5,7 +5,13 @@
     <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" [alwaysShown]="true"></app-board>
   </div>
 
-  <h3> Selected Cell:</h3>
-  <div>{{ selectedCellPosition$ | async | json }}</div>
+  <app-cell-actions
+    [board]="gameState"
+    [position]="selectedCellPosition$ | async"
+    [cell]="selectedCell$ | async"
+    (positionChange)="selectCell($event)"
+    (cellValueChange)="setCellValue($event)"
+  ></app-cell-actions>
+
   <div>{{ selectedCell$ | async | json }}</div>
 </ng-container>

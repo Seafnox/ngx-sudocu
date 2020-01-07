@@ -1,0 +1,13 @@
+<div class="navbar">
+  <h3>Navigation</h3>
+  <button (click)="moveLeft()">Left</button>
+  <button (click)="moveRight()">Right</button>
+  <button (click)="moveUp()">Up</button>
+  <button (click)="moveDown()">Down</button>
+</div>
+
+<div class="keyboard" *ngIf="!!cell">
+  <ng-container *ngFor="let value of values">
+    <button (click)="select(value)">{{value}}</button>
+  </ng-container>
+</div>
