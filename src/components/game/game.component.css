@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+.flex_container {
+  display: flex;
+}
+
+.flex_board {
+  display: block;
+  margin: 0 20px;
+}

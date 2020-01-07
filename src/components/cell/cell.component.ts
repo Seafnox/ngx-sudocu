@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Cell } from '../../interfaces/cell';
 
 @Component({
   selector: 'app-cell',
@@ -7,5 +8,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CellComponent {
-  @Input() value: string;
+  @Input() cell: Cell;
+  @Input() alwaysShown: boolean;
+
+  public getValue(): string {
+    if (this.alwaysShown || this.cell.isPermanent) {
+      return this.cell.value.toString();
+    }
+
+    return this.cell.userValue ? this.cell.userValue.toString() : ``;
+  }
 }

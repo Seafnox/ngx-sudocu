@@ -5,4 +5,10 @@
   height: 40px;
   line-height: 40px;
   text-align: center;
+  border-collapse: collapse;
+}
+
+:host-context(.active_cell) {
+  border-color: brown;
+  background: aquamarine;
 }

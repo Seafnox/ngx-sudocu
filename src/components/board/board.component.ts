@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { xSize, ySize } from '../../consts/config';
 import { Board } from '../../interfaces/board';
+import { Cell } from '../../interfaces/cell';
+import { CellPosition } from '../../interfaces/cell.position';
 
 @Component({
   selector: 'app-board',
@@ -10,9 +12,13 @@ import { Board } from '../../interfaces/board';
 })
 export class BoardComponent {
   @Input() gameStatus: Board;
+  @Input() selectedPosition: CellPosition;
+  @Input() alwaysShown: boolean;
 
-  public getCell(x: number, y: number): string {
-    return this.gameStatus[x][y];
+  @Output() selected = new EventEmitter<CellPosition>();
+
+  public getCell(x: number, y: number): Cell {
+    return this.gameStatus[y][x];
   }
 
   public getCells(): number[] {
@@ -21,5 +27,13 @@ export class BoardComponent {
 
   public getRows(): number[] {
     return new Array(ySize).fill(0).map((a, index) => index);
+  }
+
+  public selectCell(x: number, y: number): void {
+    this.selected.emit({x, y});
+  }
+
+  public isCellSelected(x: number, y: number): boolean {
+    return this.selectedPosition && this.selectedPosition.x === x && this.selectedPosition.y === y;
   }
 }

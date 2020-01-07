@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { xAreaCount, xAreaSize, xSize, yAreaCount, yAreaSize, ySize } from '../../consts/config';
 import { Board } from '../../interfaces/board';
 import { OperationNames } from '../../consts/operationNames';
+import { Cell } from '../../interfaces/cell';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,17 @@ export class GameGeneratorService {
     return this.randomizeBoard(nativeBoard);
   }
 
-  private generateRow(x: number): string[] {
-    return new Array(ySize).fill(0).map((a, y) => this.generateCell(x, y).toString());
+  private generateRow(x: number): Cell[] {
+    return new Array(ySize).fill(0).map((a, y) => this.generateCell(x, y));
   }
 
-  private generateCell(x: number, y: number): number {
+  private generateCell(x: number, y: number): Cell {
+    return {
+      value: this.generateCellValue(x, y),
+      isPermanent: false,
+    };
+  }
+  private generateCellValue(x: number, y: number): number {
     if (y < yAreaSize) {
       return (x + y * xAreaCount) % xSize + 1;
     }

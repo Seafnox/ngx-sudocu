@@ -1,7 +1,8 @@
 <ng-container *ngFor="let y of getRows()">
   <div class="row">
     <ng-container *ngFor="let x of getCells()">
-      <app-cell [value]="getCell(x, y)"></app-cell>
+      <app-cell class="cell" [class.active_cell]="isCellSelected(x, y)" [cell]="getCell(x, y)" [alwaysShown]="alwaysShown"
+                (click)="selectCell(x, y)"></app-cell>
     </ng-container>
   </div>
 </ng-container>

@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  margin: 0;
+}

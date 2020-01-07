@@ -1,3 +1,5 @@
+import { Cell } from './cell';
+
 export type Board = Row[];
 
-export type Row = string[];
+export type Row = Cell[];
