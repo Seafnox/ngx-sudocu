@@ -13,5 +13,9 @@
     (cellValueChange)="setCellValue($event)"
   ></app-cell-actions>
 
+  <div>
+    <button (click)="validate()">Validate</button>
+  </div>
+
   <div>{{ selectedCell$ | async | json }}</div>
 </ng-container>

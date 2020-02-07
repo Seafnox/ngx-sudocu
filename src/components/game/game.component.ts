@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
+import { GameValidatorService } from '../../services/game-validator/game-validator.service';
 
 @Component({
   selector: 'app-game',
@@ -21,11 +22,16 @@ export class GameComponent {
   constructor(
     private gameGeneratorService: GameGeneratorService,
     private gameStateService: GameStateService,
+    private gameValidatorService: GameValidatorService,
   ) {
     this.regenerateBoard();
     this.gameState$ = this.gameStateService.getState$();
     this.selectedCell$ = this.gameStateService.getSelectedCellData$();
     this.selectedCellPosition$ = this.gameStateService.getSelectedCellPosition$();
+  }
+
+  validate(): void {
+    this.gameValidatorService.validate();
   }
 
   public regenerateBoard(): void {

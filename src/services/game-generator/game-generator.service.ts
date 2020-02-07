@@ -61,6 +61,7 @@ export class GameGeneratorService {
     return {
       value: this.generateCellValue(x, y),
       isPermanent: false,
+      hasError: false,
     };
   }
 

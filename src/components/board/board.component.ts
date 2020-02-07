@@ -36,4 +36,8 @@ export class BoardComponent {
   public isCellSelected(x: number, y: number): boolean {
     return this.selectedPosition && this.selectedPosition.x === x && this.selectedPosition.y === y;
   }
+
+  public hasCellError(x: number, y: number): boolean {
+    return this.getCell(x, y).hasError;
+  }
 }

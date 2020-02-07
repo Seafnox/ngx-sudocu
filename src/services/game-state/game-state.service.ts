@@ -4,7 +4,6 @@ import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { map, switchMap } from 'rxjs/operators';
-import { boardSize } from '../../consts/config';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,10 @@ export class GameStateService {
 
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
+    this.state$.next(state);
+  }
+
+  public updateState(state: Board): void {
     this.state$.next(state);
   }
 
