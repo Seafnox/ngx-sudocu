@@ -15,6 +15,4 @@
     <button *ngIf="isGameWined$ | async" (click)="regenerateBoard()">Regenerate</button>
     <button (click)="validate()">Validate</button>
   </div>
-
-  <div>{{ selectedCell$ | async | json }}</div>
 </ng-container>

@@ -66,11 +66,11 @@ export class GameStateService {
   }
 
   private preValidateState(state: Board): Board {
-    const hasEmptyCell = state.some(row => row.some(cell => !cell.userValue));
+    const hasEmptyCell = !!state.some(row => !!row.some(cell => !cell.isPermanent && !cell.userValue));
 
     if (!hasEmptyCell) {
       const validatedState = this.gameValidatorService.validate(state);
-      const hasError = validatedState.some(row => row.some(cell => cell.hasError));
+      const hasError = !!validatedState.some(row => !!row.some(cell => cell.hasError));
 
       if (!hasError) {
         this.isWin$.next(true);
