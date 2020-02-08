@@ -1,12 +1,10 @@
 <h3>Seed: {{ seed }} <button (click)="regenerateBoard()">Regenerate</button></h3>
 <ng-container *ngIf="gameState$ | async as gameState">
-  <div class="flex_container">
-    <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" (selected)="selectCell($event)"></app-board>
-    <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" [alwaysShown]="true"></app-board>
-  </div>
+  <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" (selected)="selectCell($event)"></app-board>
 
   <app-cell-actions
     [board]="gameState"
+    [stopChanges]="isGameWined$ | async"
     [position]="selectedCellPosition$ | async"
     [cell]="selectedCell$ | async"
     (positionChange)="selectCell($event)"
@@ -14,6 +12,7 @@
   ></app-cell-actions>
 
   <div>
+    <button *ngIf="isGameWined$ | async" (click)="regenerateBoard()">Regenerate</button>
     <button (click)="validate()">Validate</button>
   </div>
 

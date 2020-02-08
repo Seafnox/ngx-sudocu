@@ -15,6 +15,7 @@ import { GameValidatorService } from '../../services/game-validator/game-validat
 export class GameComponent {
 
   public gameState$: Observable<Board>;
+  public isGameWined$: Observable<boolean>;
   public selectedCell$: Observable<Cell>;
   public selectedCellPosition$: Observable<CellPosition>;
   public seed: number;
@@ -25,6 +26,7 @@ export class GameComponent {
   ) {
     this.regenerateBoard();
     this.gameState$ = this.gameStateService.getState$();
+    this.isGameWined$ = this.gameStateService.getIsWin$();
     this.selectedCell$ = this.gameStateService.getSelectedCellData$();
     this.selectedCellPosition$ = this.gameStateService.getSelectedCellPosition$();
   }
@@ -36,10 +38,6 @@ export class GameComponent {
   public regenerateBoard(): void {
     this.seed = this.gameGeneratorService.generateSeed();
     this.gameStateService.setState(this.gameGeneratorService.generateGame(this.seed, 3));
-  }
-
-  public getLastOperations(): string[] {
-    return this.gameGeneratorService.lastOperations;
   }
 
   public selectCell(position: CellPosition): void {

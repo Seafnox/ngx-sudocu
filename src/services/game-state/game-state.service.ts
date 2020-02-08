@@ -12,11 +12,13 @@ import { GameValidatorService } from '../game-validator/game-validator.service';
 export class GameStateService {
   private state$ = new BehaviorSubject<Board>(null);
   private selectedCellPosition$ = new BehaviorSubject<CellPosition>(null);
+  private isWin$ = new BehaviorSubject<boolean>(false);
 
   constructor(private gameValidatorService: GameValidatorService) {}
 
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
+    this.isWin$.next(false);
     this.state$.next(state);
   }
 
@@ -41,11 +43,19 @@ export class GameStateService {
     return this.state$.asObservable();
   }
 
+  public getIsWin$(): Observable<boolean> {
+    return this.isWin$.asObservable();
+  }
+
   public getSelectedCellPosition$(): Observable<CellPosition> {
     return this.selectedCellPosition$.asObservable();
   }
 
   public changeSelectedCellValue(value: number) {
+    if (this.isWin$.value) {
+      return;
+    }
+
     const position = this.selectedCellPosition$.value;
     const newState = this.state$.value.map((row, y) =>
       y !== position.y ? row : row.map((cell, x) =>
@@ -56,6 +66,18 @@ export class GameStateService {
   }
 
   private preValidateState(state: Board): Board {
+    const isFullFilled = state.some(row => row.some(cell => !cell.userValue));
+
+    if (isFullFilled) {
+      const validatedState = this.gameValidatorService.validate(state);
+      const hasError = validatedState.some(row => row.some(cell => cell.hasError));
+
+      if (!hasError) {
+        this.isWin$.next(true);
+      }
+
+      return validatedState;
+    }
     return this.gameValidatorService.preValidate(state);
   }
 }

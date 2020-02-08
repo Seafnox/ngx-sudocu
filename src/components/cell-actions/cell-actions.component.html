@@ -6,7 +6,7 @@
   <button (click)="moveDown()">Down</button>
 </div>
 
-<div class="keyboard" *ngIf="!!cell">
+<div class="keyboard" *ngIf="!!cell || !stopChanges">
   <ng-container *ngFor="let value of values">
     <button (click)="select(value)">{{value}}</button>
   </ng-container>
