@@ -19,6 +19,9 @@ export class GameStateService {
 
   public updateState(state: Board): void {
     this.state$.next(state);
+
+    const selectedCellPosition = this.selectedCellPosition$.value;
+    console.log('selected', state[selectedCellPosition.y][selectedCellPosition.x]);
   }
 
   public setSelectedCellPosition(position: CellPosition): void {
