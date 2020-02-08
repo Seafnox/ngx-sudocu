@@ -19,9 +19,6 @@ export class GameStateService {
 
   public updateState(state: Board): void {
     this.state$.next(state);
-
-    const selectedCellPosition = this.selectedCellPosition$.value;
-    console.log('selected', state[selectedCellPosition.y][selectedCellPosition.x]);
   }
 
   public setSelectedCellPosition(position: CellPosition): void {
@@ -48,7 +45,7 @@ export class GameStateService {
     const position = this.selectedCellPosition$.value;
     const newState = this.state$.value.map((row, y) =>
       y !== position.y ? row : row.map((cell, x) =>
-        x !== position.x ? cell : {...cell, userValue: value}));
+        x !== position.x ? cell : {...cell, userValue: value, hasError: false}));
     this.state$.next(newState);
   }
 }

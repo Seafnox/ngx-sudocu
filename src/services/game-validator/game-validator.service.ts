@@ -12,12 +12,10 @@ export class GameValidatorService {
   constructor(private gameStateService: GameStateService) {}
 
   validate(): void {
-    console.log('validate');
     this.gameStateService.getState$().pipe(take(1)).subscribe(state => this.validateAndUpdate(state));
   }
 
   private validateAndUpdate(state: Board): void {
-    console.log('validateAndUpdate', state);
     const newState = state.map((row, y) => row.map((cell, x) => ({...cell, hasError: this.hasCellError(cell, state, x, y)})));
     this.gameStateService.updateState(newState);
   }
@@ -32,12 +30,10 @@ export class GameValidatorService {
     }
 
     if (!this.isCellValueUniqueInRow(cell, state, x, y)) {
-      console.log('not isCellValueUniqueInRow', x, y, cell);
       return true;
     }
 
     if (!this.isCellValueUniqueInCol(cell, state, x, y)) {
-      console.log('not isCellValueUniqueInCol', x, y, cell);
       return true;
     }
 
