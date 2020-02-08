@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { Board } from '../../interfaces/board';
 import { Cell } from '../../interfaces/cell';
-import { GameStateService } from '../game-state/game-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameValidatorService {
-
-  constructor(private gameStateService: GameStateService) {}
-
-  validate(): void {
-    this.gameStateService.getState$().pipe(take(1)).subscribe(state => this.validateAndUpdate(state));
+  validate(state: Board): Board {
+    return this.validateAndUpdate(state);
   }
 
-  private validateAndUpdate(state: Board): void {
-    const newState = state.map((row, y) => row.map((cell, x) => ({...cell, hasError: this.hasCellError(cell, state, x, y)})));
-    this.gameStateService.updateState(newState);
+  preValidate(state: Board): Board {
+    return this.preValidateAndUpdate(state);
   }
 
-  private hasCellError(cell: Cell, state: Board, x: number, y: number): boolean {
+  private validateAndUpdate(state: Board): Board {
+    return state.map((row, y) => row.map((cell, x) => ({...cell, hasError: this.hasValidationError(cell, state, x, y)})));
+  }
+
+  private preValidateAndUpdate(state: Board): Board {
+    return state.map((row, y) => row.map((cell, x) => ({...cell, hasError: this.hasPreValidationError(cell, state, x, y)})));
+  }
+
+  private hasValidationError(cell: Cell, state: Board, x: number, y: number): boolean {
     if (cell.isPermanent) {
       return false;
     }
@@ -29,15 +31,15 @@ export class GameValidatorService {
       return true;
     }
 
-    if (!this.isCellValueUniqueInRow(cell, state, x, y)) {
-      return true;
+    return !(this.isCellValueUniqueInRow(cell, state, x, y) && this.isCellValueUniqueInCol(cell, state, x, y));
+  }
+
+  private hasPreValidationError(cell: Cell, state: Board, x: number, y: number): boolean {
+    if (cell.isPermanent || !cell.userValue) {
+      return false;
     }
 
-    if (!this.isCellValueUniqueInCol(cell, state, x, y)) {
-      return true;
-    }
-
-    return false;
+    return !(this.isCellValueUniqueInRow(cell, state, x, y) && this.isCellValueUniqueInCol(cell, state, x, y));
   }
 
   private isCellValueUniqueInRow(cell: Cell, state: Board, x: number, y: number) {

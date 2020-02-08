@@ -4,7 +4,6 @@
       <app-cell
         class="cell"
         [class.active_cell]="isCellSelected(x, y)"
-        [class.error]="hasCellError(x, y)"
         [cell]="getCell(x, y)"
         [alwaysShown]="alwaysShown"
         (click)="selectCell(x, y)"

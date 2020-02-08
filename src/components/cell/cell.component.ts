@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { Cell } from '../../interfaces/cell';
 
 @Component({
@@ -10,6 +10,8 @@ import { Cell } from '../../interfaces/cell';
 export class CellComponent {
   @Input() cell: Cell;
   @Input() alwaysShown: boolean;
+  @HostBinding('class.error') get hasError() { return this.cell && this.cell.hasError; }
+  @HostBinding('class.empty') get isEmpty() { return this.cell && !this.cell.userValue && !this.cell.isPermanent; }
 
   public getValue(): string {
     if (this.alwaysShown || this.cell.isPermanent) {

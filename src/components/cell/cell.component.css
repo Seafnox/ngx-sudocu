@@ -11,14 +11,16 @@
 }
 
 :host-context(.active_cell) {
-  border-color: brown;
   background: aquamarine;
 }
 
 :host-context(.error) {
   background-color: navajowhite;
-  border-color: darkred;
-  color: darkred;
+  color: red;
+}
+
+:host-context(.error.active_cell) {
+  background: aquamarine;
 }
 
 .permanent {

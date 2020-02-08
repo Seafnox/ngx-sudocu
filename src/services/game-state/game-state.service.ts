@@ -4,6 +4,7 @@ import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { map, switchMap } from 'rxjs/operators';
+import { GameValidatorService } from '../game-validator/game-validator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,16 @@ export class GameStateService {
   private state$ = new BehaviorSubject<Board>(null);
   private selectedCellPosition$ = new BehaviorSubject<CellPosition>(null);
 
+  constructor(private gameValidatorService: GameValidatorService) {}
+
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
     this.state$.next(state);
   }
 
-  public updateState(state: Board): void {
-    this.state$.next(state);
+  public validateState(): void {
+    const newState = this.gameValidatorService.validate(this.state$.value);
+    this.state$.next(newState);
   }
 
   public setSelectedCellPosition(position: CellPosition): void {
@@ -46,6 +50,12 @@ export class GameStateService {
     const newState = this.state$.value.map((row, y) =>
       y !== position.y ? row : row.map((cell, x) =>
         x !== position.x ? cell : {...cell, userValue: value, hasError: false}));
-    this.state$.next(newState);
+
+    const validatedState = this.preValidateState(newState);
+    this.state$.next(validatedState);
+  }
+
+  private preValidateState(state: Board): Board {
+    return this.gameValidatorService.preValidate(state);
   }
 }

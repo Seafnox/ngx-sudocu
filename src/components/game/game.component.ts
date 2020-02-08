@@ -22,7 +22,6 @@ export class GameComponent {
   constructor(
     private gameGeneratorService: GameGeneratorService,
     private gameStateService: GameStateService,
-    private gameValidatorService: GameValidatorService,
   ) {
     this.regenerateBoard();
     this.gameState$ = this.gameStateService.getState$();
@@ -31,7 +30,7 @@ export class GameComponent {
   }
 
   validate(): void {
-    this.gameValidatorService.validate();
+    this.gameStateService.validateState();
   }
 
   public regenerateBoard(): void {
