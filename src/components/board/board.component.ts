@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { boardSize } from '../../consts/config';
+import { areaCount, boardSize } from '../../consts/config';
 import { Board } from '../../interfaces/board';
 import { Cell } from '../../interfaces/cell';
 import { CellPosition } from '../../interfaces/cell.position';
@@ -25,12 +25,20 @@ export class BoardComponent {
     return new Array(boardSize).fill(0).map((a, index) => index);
   }
 
+  public getColSectors(): number[] {
+    return new Array(areaCount).fill(0).map((a, index) => index);
+  }
+
+  public getRowSectors(): number[] {
+    return new Array(areaCount).fill(0).map((a, index) => index);
+  }
+
   public getRows(): number[] {
     return new Array(boardSize).fill(0).map((a, index) => index);
   }
 
-  public selectCell(x: number, y: number): void {
-    this.selected.emit({x, y});
+  public selectCell(event: CellPosition): void {
+    this.selected.emit(event);
   }
 
   public isCellSelected(x: number, y: number): boolean {

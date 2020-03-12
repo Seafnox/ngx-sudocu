@@ -1,13 +1,15 @@
-<ng-container *ngFor="let y of getRows()">
+<ng-container *ngFor="let positionY of getRowSectors()">
   <div class="row">
-    <ng-container *ngFor="let x of getCells()">
-      <app-cell
-        class="cell"
-        [class.active_cell]="isCellSelected(x, y)"
-        [cell]="getCell(x, y)"
+    <ng-container *ngFor="let positionX of getColSectors()">
+      <app-sector
+        [selectedPosition]="selectedPosition"
         [alwaysShown]="alwaysShown"
-        (click)="selectCell(x, y)"
-      ></app-cell>
+        [gameStatus]="gameStatus"
+        [positionX]="positionX"
+        [positionY]="positionY"
+        (selected)="selectCell($event)"
+        class="sector"
+      ></app-sector>
     </ng-container>
   </div>
 </ng-container>
