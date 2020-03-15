@@ -30,7 +30,7 @@
 }
 
 .game_action:hover {
-  background: rgba(66,66,99,0.2);
+  background: var(--button-hover-backgroud);
 }
 
 .game_action:focus {
@@ -38,9 +38,9 @@
 }
 
 .game_action:active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }
 
 .game_action.active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }

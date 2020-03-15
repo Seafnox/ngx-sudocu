@@ -1,17 +1,17 @@
 .move_menu {
   position: relative;
-  height: 150px;
+  height:  var(--move-menu-size);
 }
 
 .move {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: var(--move-action-size);
+  height: var(--move-action-size);
+  line-height: var(--move-action-size);
   position: absolute;
 }
 
 .move:hover {
-  background: rgba(66,66,99,0.2);
+  background: var(--button-hover-backgroud);
 }
 
 .move:focus {
@@ -19,47 +19,47 @@
 }
 
 .move:active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }
 
 .move.active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }
 
 .move.left {
   left: 0;
-  top: 50px;
+  top: var(--move-action-size);
 }
 
 .move.right {
   right: 0;
-  top: 50px;
+  top: var(--move-action-size);
 }
 
 .move.up {
-  left: 50px;
+  left: var(--move-action-size);
   top: 0;
 }
 
 .move.down {
-  left: 50px;
+  left: var(--move-action-size);
   bottom: 0;
 }
 
 .keyboard {
   margin-top: 40px;
-  width: 150px;
+  width: var(--move-menu-size);
 }
 
 .keyboard_action {
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: var(--move-action-size);
+  height: var(--move-action-size);
+  line-height: var(--move-action-size);
 }
 
 .keyboard_action:hover {
-  background: rgba(66,66,99,0.2);
+  background: var(--button-hover-backgroud);
 }
 
 .keyboard_action:focus {
@@ -67,9 +67,9 @@
 }
 
 .keyboard_action:active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }
 
 .keyboard_action.active {
-  background: rgba(99,99,255,0.2);
+  background: var(--button-active-backgroud);
 }
