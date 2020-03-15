@@ -1,13 +1,12 @@
-<div class="navbar">
-  <h3>Navigation</h3>
-  <button (click)="moveLeft()">Left</button>
-  <button (click)="moveRight()">Right</button>
-  <button (click)="moveUp()">Up</button>
-  <button (click)="moveDown()">Down</button>
+<div class="move_menu">
+  <button (click)="moveLeft()" class="move left">Left</button>
+  <button (click)="moveRight()" class="move right">Right</button>
+  <button (click)="moveUp()" class="move up">Up</button>
+  <button (click)="moveDown()" class="move down">Down</button>
 </div>
 
 <div class="keyboard" *ngIf="!!cell || !stopChanges">
   <ng-container *ngFor="let value of values">
-    <button (click)="select(value)">{{value}}</button>
+    <button (click)="select(value)" class="keyboard_action">{{value}}</button>
   </ng-container>
 </div>

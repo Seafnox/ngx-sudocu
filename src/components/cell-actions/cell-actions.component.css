@@ -1,0 +1,75 @@
+.move_menu {
+  position: relative;
+  height: 150px;
+}
+
+.move {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  position: absolute;
+}
+
+.move:hover {
+  background: rgba(66,66,99,0.2);
+}
+
+.move:focus {
+  outline: transparent;
+}
+
+.move:active {
+  background: rgba(99,99,255,0.2);
+}
+
+.move.active {
+  background: rgba(99,99,255,0.2);
+}
+
+.move.left {
+  left: 0;
+  top: 50px;
+}
+
+.move.right {
+  right: 0;
+  top: 50px;
+}
+
+.move.up {
+  left: 50px;
+  top: 0;
+}
+
+.move.down {
+  left: 50px;
+  bottom: 0;
+}
+
+.keyboard {
+  margin-top: 40px;
+  width: 150px;
+}
+
+.keyboard_action {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.keyboard_action:hover {
+  background: rgba(66,66,99,0.2);
+}
+
+.keyboard_action:focus {
+  outline: transparent;
+}
+
+.keyboard_action:active {
+  background: rgba(99,99,255,0.2);
+}
+
+.keyboard_action.active {
+  background: rgba(99,99,255,0.2);
+}
