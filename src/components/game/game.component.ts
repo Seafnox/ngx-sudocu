@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
-import { GameValidatorService } from '../../services/game-validator/game-validator.service';
 
 @Component({
   selector: 'app-game',
