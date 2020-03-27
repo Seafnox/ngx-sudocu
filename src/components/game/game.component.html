@@ -1,18 +1,20 @@
 <h3>Seed: {{ seed }} <button (click)="regenerateBoard()" class="game_action">Regenerate</button></h3>
 <ng-container *ngIf="gameState$ | async as gameState">
-  <div class="flex_container">
-    <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" (selected)="selectCell($event)"></app-board>
+  <app-happy-screen [isWinner]="isGameWined$ | async">
+    <div class="flex_container">
+      <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" (selected)="selectCell($event)"></app-board>
 
-    <app-cell-actions
-      [board]="gameState"
-      [stopChanges]="isGameWined$ | async"
-      [position]="selectedCellPosition$ | async"
-      [cell]="selectedCell$ | async"
-      (positionChange)="selectCell($event)"
-      (cellValueChange)="setCellValue($event)"
-      class="flex_actions"
-    ></app-cell-actions>
-  </div>
+      <app-cell-actions
+        [board]="gameState"
+        [stopChanges]="isGameWined$ | async"
+        [position]="selectedCellPosition$ | async"
+        [cell]="selectedCell$ | async"
+        (positionChange)="selectCell($event)"
+        (cellValueChange)="setCellValue($event)"
+        class="flex_actions"
+      ></app-cell-actions>
+    </div>
+  </app-happy-screen>
 
   <div class="game_actions">
     <button *ngIf="isGameWined$ | async" (click)="regenerateBoard()" class="game_action">Regenerate</button>

@@ -56,6 +56,8 @@ export class CellActionsComponent {
 
   @HostListener('window:keydown', ['$event'])
   private handleKeyDown(event: KeyboardEvent): void {
+    if (this.stopChanges) { return; }
+
     switch (event.key) {
       case 'ArrowUp': return this.moveUp();
       case 'ArrowDown': return this.moveDown();
