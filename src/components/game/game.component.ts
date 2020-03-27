@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { GameGeneratorService } from '../../services/game-generator/game-generator.service';
 import { GameStateService } from '../../services/game-state/game-state.service';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, switchMap, switchMapTo, take } from 'rxjs/operators';
+import { filter, switchMapTo, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -14,7 +14,9 @@ import { filter, switchMap, switchMapTo, take } from 'rxjs/operators';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-
+  // TODO add Local storage + state by seed
+  // TODO add time score
+  // TODO add bundle analyzer
   public gameState$: Observable<Board>;
   public isGameWined$: Observable<boolean>;
   public selectedCell$: Observable<Cell>;
