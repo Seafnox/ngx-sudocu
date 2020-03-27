@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { GameModule } from '../components/game/game.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -11,6 +11,7 @@ import { GameModule } from '../components/game/game.module';
     imports: [
         BrowserModule,
         GameModule,
+        RouterModule.forRoot([]),
     ],
   providers: [],
   bootstrap: [AppComponent]

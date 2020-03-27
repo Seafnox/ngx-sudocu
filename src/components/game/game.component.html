@@ -1,4 +1,4 @@
-<h3>Seed: {{ seed }} <button (click)="regenerateBoard()" class="game_action">Regenerate</button></h3>
+<h3>Seed: {{ seed$ | async }} <button (click)="regenerateBoard()" class="game_action">Regenerate</button></h3>
 <ng-container *ngIf="gameState$ | async as gameState">
   <app-happy-screen [isWinner]="isGameWined$ | async">
     <div class="flex_container">

@@ -10,7 +10,7 @@ import { Cell } from '../../interfaces/cell';
 export class GameGeneratorService {
   private limit = 2147483647;
   private pureNumber = 16807;
-  private seed = this.generateSeed();
+  private seed;
   public lastOperations: OperationNames[] = [];
 
   public generateSeed(): number {
@@ -26,8 +26,8 @@ export class GameGeneratorService {
     return board;
   }
 
-  public generateBoard(seed: number): Board {
-    this.seed = typeof seed === 'number' ? seed : this.seed;
+  private generateBoard(seed: number): Board {
+    this.seed = typeof seed === 'number' ? seed : this.generateSeed();
 
     const nativeBoard = new Array(boardSize).fill(0).map((a, x) => this.generateRow(x));
     this.lastOperations = [];
