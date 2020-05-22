@@ -55,7 +55,7 @@ export class CellActionsComponent {
   }
 
   @HostListener('window:keydown', ['$event'])
-  private handleKeyDown(event: KeyboardEvent): void {
+  public handleKeyDown(event: KeyboardEvent): void {
     if (this.stopChanges) { return; }
 
     switch (event.key) {

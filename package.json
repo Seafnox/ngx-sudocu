@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "bundle-report": "ng build --prod --stats-json && webpack-bundle-analyzer dist/ngx-sudocu/stats-es2015.json"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }
