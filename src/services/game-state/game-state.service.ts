@@ -4,6 +4,7 @@ import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { map, switchMap } from 'rxjs/operators';
+import { GameStorageService } from '../game-storage/game-storage.service';
 import { GameValidatorService } from '../game-validator/game-validator.service';
 
 @Injectable({
@@ -14,12 +15,16 @@ export class GameStateService {
   private selectedCellPosition$ = new BehaviorSubject<CellPosition>(null);
   private isWin$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private gameValidatorService: GameValidatorService) {}
+  constructor(
+    private readonly gameValidatorService: GameValidatorService,
+    private readonly gameStateService: GameStorageService,
+  ) {}
 
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
     this.isWin$.next(false);
     this.state$.next(state);
+    this.pushStorageState(state);
   }
 
   public validateState(): void {
@@ -65,6 +70,11 @@ export class GameStateService {
     this.state$.next(validatedState);
   }
 
+  private pushStorageState(state: Board): void {
+    const storageState = state.map(row => row.map(cell => cell.userValue));
+    this.gameStateService.setLastState(storageState);
+  }
+
   private preValidateState(state: Board): Board {
     const hasEmptyCell = !!state.some(row => !!row.some(cell => !cell.isPermanent && !cell.userValue));
 
@@ -73,6 +83,7 @@ export class GameStateService {
       const hasError = !!validatedState.some(row => !!row.some(cell => cell.hasError));
 
       if (!hasError) {
+        this.gameStateService.refresh();
         this.isWin$.next(true);
       }
 

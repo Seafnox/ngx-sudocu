@@ -6,7 +6,7 @@ import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, switchMapTo, take } from 'rxjs/operators';
+import { filter, switchMapTo, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +16,6 @@ import { filter, switchMapTo, take } from 'rxjs/operators';
 export class GameComponent implements OnInit {
   // TODO add Local storage + state by seed
   // TODO add time score
-  // TODO add bundle analyzer
   public gameState$: Observable<Board>;
   public isGameWined$: Observable<boolean>;
   public selectedCell$: Observable<Cell>;
@@ -37,6 +36,7 @@ export class GameComponent implements OnInit {
       .pipe(
         filter(event => event instanceof NavigationEnd),
         switchMapTo(this.activatedRoute.queryParams),
+        tap(console.log.bind(null, '[WIP] queryParams')),
         take(1),
       )
       .subscribe(params => {

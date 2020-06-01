@@ -3,28 +3,50 @@ import { areaCount, areaSize, boardSize } from '../../consts/config';
 import { Board } from '../../interfaces/board';
 import { OperationNames } from '../../consts/operationNames';
 import { Cell } from '../../interfaces/cell';
+import { StorageBoard } from '../../interfaces/storage-board';
+import { GameStorageService } from '../game-storage/game-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameGeneratorService {
+  public lastOperations: OperationNames[] = [];
+
   private limit = 2147483647;
   private pureNumber = 16807;
-  private seed;
-  public lastOperations: OperationNames[] = [];
+  private seed: number;
+
+  constructor(
+    private readonly gameStateService: GameStorageService,
+  ) {}
 
   public generateSeed(): number {
     return Math.floor(Math.random() * this.limit);
   }
 
   public generateGame(seed: number, simplicity: number): Board {
+    const lastSeed = this.gameStateService.getLastSeed();
     const board = this.generateBoard(seed);
 
     this.prepareEachRow(board, simplicity);
     this.prepareEachCol(board, simplicity);
 
+    if (seed === lastSeed) {
+      this.fillByUserBoard(board, this.gameStateService.getLastState());
+    }
+
+    this.gameStateService.setLastSeed(seed);
+
     return board;
   }
+
+  private fillByUserBoard(board: Board, lastState: StorageBoard): void {
+    board.forEach((row, firstIndex) => {
+      row.map((cell, SecondIndex) => {
+        cell.userValue = lastState[firstIndex][SecondIndex];
+      });
+    });
+    }
 
   private generateBoard(seed: number): Board {
     this.seed = typeof seed === 'number' ? seed : this.generateSeed();
