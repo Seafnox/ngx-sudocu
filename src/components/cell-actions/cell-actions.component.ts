@@ -48,10 +48,14 @@ export class CellActionsComponent {
     return this.positionChange.emit({...this.position, y: (this.position.y + 1 + boardSize) % boardSize});
   }
 
-  public select(value: number): void {
+  public select(value?: number): void {
     if (this.canSelect(value)) {
       this.cellValueChange.emit(value);
     }
+  }
+
+  public clear(): void {
+    this.select(undefined);
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -72,10 +76,14 @@ export class CellActionsComponent {
       case '7': return this.select(7);
       case '8': return this.select(8);
       case '9': return this.select(9);
+      case 'Backspace': return this.clear();
+      case 'Delete': return this.clear();
     }
+
+    console.log(event.key);
   }
 
-  private canSelect(value: number): boolean {
-    return !this.stopChanges && !!this.cell && !this.cell.isPermanent && this.cell.userValue !== value;
+  private canSelect(value?: number): boolean {
+    return this.position && !this.stopChanges && !!this.cell && !this.cell.isPermanent && this.cell.userValue !== value;
   }
 }
