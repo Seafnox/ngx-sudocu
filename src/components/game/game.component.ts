@@ -7,6 +7,7 @@ import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, switchMapTo, take, tap } from 'rxjs/operators';
+import { GameStorageService } from '../../services/game-storage/game-storage.service';
 
 @Component({
   selector: 'app-game',
@@ -14,7 +15,6 @@ import { filter, switchMapTo, take, tap } from 'rxjs/operators';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  // TODO add Local storage + state by seed
   // TODO add time score
   public gameState$: Observable<Board>;
   public isGameWined$: Observable<boolean>;
@@ -27,6 +27,7 @@ export class GameComponent implements OnInit {
   constructor(
     private gameGeneratorService: GameGeneratorService,
     private gameStateService: GameStateService,
+    private gameStorageService: GameStorageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {}
@@ -40,9 +41,14 @@ export class GameComponent implements OnInit {
         take(1),
       )
       .subscribe(params => {
-        const seed: string = params[this.seedQueryName];
+        const seed: number = +params[this.seedQueryName];
+        const lastSeed: number = this.gameStorageService.getLastSeed();
 
-        seed ? this.initBoard(+seed) : this.regenerateBoard();
+        seed
+          ? this.initBoard(seed)
+          : lastSeed
+            ? this.reInitBoard(lastSeed)
+            : this.regenerateBoard();
       });
 
     this.gameState$ = this.gameStateService.getState$();
@@ -56,10 +62,17 @@ export class GameComponent implements OnInit {
   }
 
   public regenerateBoard(): void {
-    this.seed$.next(this.gameGeneratorService.generateSeed());
-    this.gameStateService.setState(this.gameGeneratorService.generateGame(this.seed$.value, 3));
-    this.router.navigate([], { queryParams: { [this.seedQueryName]: this.seed$.value} });
+    const seed: number = this.gameGeneratorService.generateSeed();
+
+    this.router.navigate([], { queryParams: { [this.seedQueryName]: seed } });
+    this.initBoard(seed);
   }
+
+  public reInitBoard(lastSeed: number): void {
+    this.router.navigate([], { queryParams: { [this.seedQueryName]: lastSeed } });
+    this.initBoard(lastSeed);
+  }
+
 
   public initBoard(seed: number): void {
     this.seed$.next(seed);

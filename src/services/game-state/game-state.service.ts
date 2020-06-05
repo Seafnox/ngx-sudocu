@@ -23,8 +23,7 @@ export class GameStateService {
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
     this.isWin$.next(false);
-    this.state$.next(state);
-    this.pushStorageState(state);
+    this.pushState(state);
   }
 
   public validateState(): void {
@@ -66,8 +65,13 @@ export class GameStateService {
       y !== position.y ? row : row.map((cell, x) =>
         x !== position.x ? cell : {...cell, userValue: value, hasError: false}));
 
-    const validatedState = this.preValidateState(newState);
+    this.pushState(newState);
+  }
+
+  private pushState(state: Board): void {
+    const validatedState = this.preValidateState(state);
     this.state$.next(validatedState);
+    this.pushStorageState(validatedState);
   }
 
   private pushStorageState(state: Board): void {
@@ -83,8 +87,8 @@ export class GameStateService {
       const hasError = !!validatedState.some(row => !!row.some(cell => cell.hasError));
 
       if (!hasError) {
-        this.gameStateService.refresh();
         this.isWin$.next(true);
+        this.gameStateService.refresh();
       }
 
       return validatedState;
