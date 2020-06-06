@@ -10,7 +10,7 @@
 .move {
   width: var(--move-action-size);
   height: var(--move-action-size);
-  line-height: var(--move-action-size);
+  line-height: var(--move-action-line);
   position: absolute;
 }
 
@@ -59,14 +59,14 @@
   display: inline-block;
   width: var(--move-action-size);
   height: var(--move-action-size);
-  line-height: var(--move-action-size);
+  line-height: var(--move-action-line);
 }
 
 .clear_action {
   display: inline-block;
   width: calc(3 * var(--move-action-size));
   height: var(--move-action-size);
-  line-height: var(--move-action-size);
+  line-height: var(--move-action-line);
 }
 
 .keyboard_action:hover {

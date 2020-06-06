@@ -1,11 +1,15 @@
-<h3>
-  Seed: {{ seed$ | async }}
-  <button (click)="regenerateBoard()" class="game_action">Regenerate</button>
-  <app-timer></app-timer>
-</h3>
+<div class="header gridbox">
+  <div class="title">
+    Seed: {{ seed$ | async }}
+    <app-timer></app-timer>
+  </div>
+  <div class="regen">
+    <button (click)="regenerateBoard()" class="regen_btn">Regenerate</button>
+  </div>
+</div>
 <ng-container *ngIf="gameState$ | async as gameState">
   <app-happy-screen [isWinner]="isGameWined$ | async">
-    <div class="flex_container">
+    <div class="gridbox">
       <app-board class="flex_board" [gameStatus]="gameState" [selectedPosition]="selectedCellPosition$ | async" (selected)="selectCell($event)"></app-board>
 
       <app-cell-actions

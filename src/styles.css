@@ -5,6 +5,7 @@
 
 :root {
   --move-action-size: 50px;
+  --move-action-line: 45px;
   --move-menu-size: calc(var(--move-action-size)*3);
   --button-hover-backgroud: rgba(66,66,99,0.2);
   --button-active-backgroud: rgba(99,99,255,0.2);
