@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { map, mapTo, switchMap } from 'rxjs/operators';
+import { map, mapTo, startWith, switchMap } from 'rxjs/operators';
 import { GameStateService } from '../../services/game-state/game-state.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class TimerComponent implements OnInit {
 
   ngOnInit() {
     this.timer$ = this.gameStateService.getInitTime$().pipe(
-      switchMap(initialTime => interval(1000).pipe(mapTo(initialTime))),
+      switchMap(initialTime => interval(1000).pipe(startWith(initialTime), mapTo(initialTime))),
       map(initialTime => Date.now() - initialTime),
       map(timing => this.mapTiming(timing)),
     );
