@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .move_menu {
   position: relative;
   height:  var(--move-menu-size);
