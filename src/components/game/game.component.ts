@@ -37,7 +37,6 @@ export class GameComponent implements OnInit {
       .pipe(
         filter(event => event instanceof NavigationEnd),
         switchMapTo(this.activatedRoute.queryParams),
-        tap(console.log.bind(null, '[WIP] queryParams')),
         take(1),
       )
       .subscribe(params => {

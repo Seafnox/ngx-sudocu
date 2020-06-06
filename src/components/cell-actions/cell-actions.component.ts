@@ -79,8 +79,6 @@ export class CellActionsComponent {
       case 'Backspace': return this.clear();
       case 'Delete': return this.clear();
     }
-
-    console.log(event.key);
   }
 
   private canSelect(value?: number): boolean {
