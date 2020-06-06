@@ -7,6 +7,7 @@ import { StorageBoard } from '../../interfaces/storage-board';
 export class GameStorageService {
   public lastSeedKey = 'lastSeed';
   public lastStateKey = 'lastState';
+  public lastInitTimeKey = 'lastInitTime';
 
   setLastSeed(seed: number): void {
     window.localStorage.setItem(this.lastSeedKey, `${seed}`);
@@ -22,6 +23,14 @@ export class GameStorageService {
 
   getLastState(): StorageBoard {
     return JSON.parse(window.localStorage.getItem(this.lastStateKey));
+  }
+
+  getInitTime(): number {
+    return +window.localStorage.getItem(this.lastInitTimeKey);
+  }
+
+  setInitTime(value: number): void {
+    window.localStorage.setItem(this.lastInitTimeKey, `${value}`);
   }
 
   refresh(): void {

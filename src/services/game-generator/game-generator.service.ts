@@ -17,7 +17,7 @@ export class GameGeneratorService {
   private seed: number;
 
   constructor(
-    private readonly gameStateService: GameStorageService,
+    private readonly gameStorageService: GameStorageService,
   ) {}
 
   public generateSeed(): number {
@@ -25,17 +25,18 @@ export class GameGeneratorService {
   }
 
   public generateGame(seed: number, simplicity: number): Board {
-    const lastSeed = this.gameStateService.getLastSeed();
+    const lastSeed = this.gameStorageService.getLastSeed();
     const board = this.generateBoard(seed);
 
     this.prepareEachRow(board, simplicity);
     this.prepareEachCol(board, simplicity);
 
     if (seed === lastSeed) {
-      this.fillByUserBoard(board, this.gameStateService.getLastState());
+      this.fillByUserBoard(board, this.gameStorageService.getLastState());
+    } else {
+      this.gameStorageService.setLastSeed(seed);
+      this.gameStorageService.setInitTime(Date.now());
     }
-
-    this.gameStateService.setLastSeed(seed);
 
     return board;
   }

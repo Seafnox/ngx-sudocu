@@ -14,15 +14,17 @@ export class GameStateService {
   private state$ = new BehaviorSubject<Board>(null);
   private selectedCellPosition$ = new BehaviorSubject<CellPosition>(null);
   private isWin$ = new BehaviorSubject<boolean>(false);
+  private initTime$ = new BehaviorSubject<number>(Date.now());
 
   constructor(
     private readonly gameValidatorService: GameValidatorService,
-    private readonly gameStateService: GameStorageService,
+    private readonly gameStorageService: GameStorageService,
   ) {}
 
   public setState(state: Board): void {
     this.selectedCellPosition$.next(null);
     this.isWin$.next(false);
+    this.initTime$.next(this.gameStorageService.getInitTime());
     this.pushState(state);
   }
 
@@ -45,6 +47,10 @@ export class GameStateService {
 
   public getState$(): Observable<Board> {
     return this.state$.asObservable();
+  }
+
+  public getInitTime$(): Observable<number> {
+    return this.initTime$.asObservable();
   }
 
   public getIsWin$(): Observable<boolean> {
@@ -76,7 +82,7 @@ export class GameStateService {
 
   private pushStorageState(state: Board): void {
     const storageState = state.map(row => row.map(cell => cell.userValue));
-    this.gameStateService.setLastState(storageState);
+    this.gameStorageService.setLastState(storageState);
   }
 
   private preValidateState(state: Board): Board {
@@ -88,7 +94,7 @@ export class GameStateService {
 
       if (!hasError) {
         this.isWin$.next(true);
-        this.gameStateService.refresh();
+        this.gameStorageService.refresh();
       }
 
       return validatedState;
