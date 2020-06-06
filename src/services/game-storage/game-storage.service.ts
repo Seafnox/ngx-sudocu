@@ -9,8 +9,8 @@ export class GameStorageService {
   public lastStateKey = 'lastState';
   public lastInitTimeKey = 'lastInitTime';
 
-  setLastSeed(seed: number): void {
-    window.localStorage.setItem(this.lastSeedKey, `${seed}`);
+  setLastSeed(value: number): void {
+    window.localStorage.setItem(this.lastSeedKey, `${value}`);
   }
 
   getLastSeed(): number {
