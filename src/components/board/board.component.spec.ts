@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Row } from '../../interfaces/board';
+import { Cell } from '../../interfaces/cell';
 import { BoardComponent } from './board.component';
+import { BoardModule } from './board.module';
 
 describe('BoardComponent', () => {
   let component: BoardComponent;
@@ -8,7 +10,7 @@ describe('BoardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoardComponent ]
+      imports: [ BoardModule ]
     })
     .compileComponents();
   }));
@@ -16,6 +18,12 @@ describe('BoardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BoardComponent);
     component = fixture.componentInstance;
+    component.gameStatus = Array(10).fill(null).map((): Row =>
+      Array(10).fill(null).map((): Cell => ({
+        isPermanent: false,
+        hasError: false,
+        value: 0,
+      })));
     fixture.detectChanges();
   });
 

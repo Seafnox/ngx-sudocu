@@ -16,6 +16,11 @@ describe('CellComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CellComponent);
     component = fixture.componentInstance;
+    component.cell = {
+      hasError: false,
+      isPermanent: false,
+      value: 0,
+    };
     fixture.detectChanges();
   });
 

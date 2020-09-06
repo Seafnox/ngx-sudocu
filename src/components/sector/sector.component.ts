@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Board } from '../../interfaces/board';
 import { CellPosition } from '../../interfaces/cell.position';
 import { Cell } from '../../interfaces/cell';
-import { areaSize, boardSize } from '../../consts/config';
+import { areaSize } from '../../consts/config';
 
 @Component({
   selector: 'app-sector',

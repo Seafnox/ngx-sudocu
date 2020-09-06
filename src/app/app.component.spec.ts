@@ -1,4 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { GameModule } from '../components/game/game.module';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -6,6 +9,11 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        GameModule,
+        RouterTestingModule,
       ],
     }).compileComponents();
   }));
