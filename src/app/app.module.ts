@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     imports: [
         BrowserModule,
         GameModule,
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
     ],
   providers: [],
   bootstrap: [AppComponent]

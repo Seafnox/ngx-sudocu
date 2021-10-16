@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Row } from '../../interfaces/board';
 import { Cell } from '../../interfaces/cell';
 import { SectorComponent } from './sector.component';
@@ -8,7 +8,7 @@ describe('SectorComponent', () => {
   let component: SectorComponent;
   let fixture: ComponentFixture<SectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [SectorModule]
     })
