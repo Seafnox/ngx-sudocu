@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "bundle-report": "ng build --configuration production --stats-json && webpack-bundle-analyzer dist/ngx-sudocu/stats-es2015.json"
+    "bundle-report": "ng build --configuration production --stats-json && webpack-bundle-analyzer dist/ngx-sudocu/stats.json"
   },
   "private": true,
   "dependencies": {
