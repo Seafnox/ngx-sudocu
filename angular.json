@@ -71,7 +71,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-sudocu:build"
+            "browserTarget": "ngx-sudocu:build",
+            "ssl": true
           },
           "configurations": {
             "production": {
