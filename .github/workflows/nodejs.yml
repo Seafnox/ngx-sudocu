@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -17,10 +17,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, test, and build
-      run: |
-        npm ci
-        npm test
-        npm run build --if-present
+    - name: npm install
+      run: npm ci
+    - name: npm test
+      run: npm test
+    - name: npm build
+      run: npm run build --if-present
       env:
         CI: true
